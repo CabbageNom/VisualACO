@@ -17,7 +17,7 @@ public class City {
 	public City(double x, double y) {
 		this.x = x;
 		this.y = y;
-		new Color((float) Math.random(), (float) Math.random(), (float) Math.random());
+		this.color = new Color((float) Math.random(), (float) Math.random(), (float) Math.random());
 	}
 	
 	/**
@@ -36,6 +36,8 @@ public class City {
 	
 	/**
 	 * Returns the distance between two cities.
+	 * 
+	 * @param city The other city to which the distance is calculated.
 	 */
 	public double dist(City city) {
 		double dx = this.getX() - city.getX();
@@ -44,10 +46,22 @@ public class City {
 		return Math.sqrt(dx*dx + dy*dy);
 	}
 	
+	/**
+	 * Renders the city on the given graphics object.
+	 * 
+	 * @param g2 Graphics2D object to draw on.
+	 */
 	public void render(Graphics2D g2) {
 		this.render(g2, 500, 500);	
 	}
 	
+	/**
+	 * Renders the city on the given graphics object.
+	 * 
+	 * @param g2 Graphics2D object to draw on.
+	 * @param maxX The maximum X value of all cities, to scale the render window appropriately.
+	 * @param maxY The maximum Y value of all cities, to scale the render window appropriately.
+	 */
 	public void render(Graphics2D g2, int maxX, int maxY) {
 		int drawX = (int) (this.getX()/(maxX/500));
 		int drawY = (int) (this.getY()/(maxY/500));
