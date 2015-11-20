@@ -8,9 +8,14 @@ package aco;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+
 import java.awt.Dimension;
 
+import java.util.ArrayList;
+
 public class Main {
+	
+	public static ArrayList<City> cities = new ArrayList<City>();
 	
 	/**
 	 * Creates the JFrame in which the map is rendered.
@@ -26,7 +31,8 @@ public class Main {
 	}
 	
 	public static void main(String[] args) {
-	
+		createFrame();
+		cities.add(new City(100, 100));
 	}
 	
 }

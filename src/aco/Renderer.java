@@ -21,7 +21,9 @@ public class Renderer extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;	
-		g.fillRect(20, 20, 40, 40);
+		for (City city : Main.cities) {
+			city.render(g2);
+		}
 	}
 	
 	void refresh() {
