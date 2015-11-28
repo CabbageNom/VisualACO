@@ -16,6 +16,14 @@ public class FileParser {
 		
 	}
 	
+	public double getMinX() {
+		return minX;
+	}
+	
+	public double getMinY() {
+		return minY;
+	}
+	
 	public double getMaxX() {
 		return maxX;
 	}
@@ -71,10 +79,5 @@ public class FileParser {
 			}
 			j++;
 		}
-		
-		System.out.println(minX);
-		System.out.println(maxX);
-		System.out.println(minY);
-		System.out.println(maxY);
 	}
 }
