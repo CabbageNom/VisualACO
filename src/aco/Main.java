@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class Main {
 	
-	public static ArrayList<City> cities = new ArrayList<City>();
 	public static AntColony colony;
 	
 	/**
@@ -25,17 +24,24 @@ public class Main {
 		JFrame frame = new JFrame() {{
 			this.setTitle("VisualACO");
 			this.getContentPane().add(new Renderer());
-			this.setSize(new Dimension(510, 510));
+			this.setSize(new Dimension(710, 710));
 			this.setVisible(true);
 			this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		}};	
 	}
 	
 	public static void main(String[] args) {
-		colony = new AntColony();
+		FileParser fp = new FileParser();
+		fp.readFile("wi29.tsp");
+		colony = new AntColony(
+				5,
+				fp.getCities(),
+				(int) (fp.getMinX()),
+				(int) (fp.getMinY()),
+				(int) (fp.getMaxX()),
+				(int) (fp.getMaxY())
+			);
 		createFrame();
-		cities.add(new City(100, 100));
-		colony.add(new Ant(150, 150));
 	}
 	
 }

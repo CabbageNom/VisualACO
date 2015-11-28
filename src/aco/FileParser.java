@@ -79,5 +79,10 @@ public class FileParser {
 			}
 			j++;
 		}
+		System.out.println(minX);
+		System.out.println(maxX);
+		
+		System.out.println(minY);
+		System.out.println(maxY);
 	}
 }

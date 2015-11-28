@@ -20,6 +20,7 @@ public class Renderer extends JPanel {
 		this.setVisible(true);
 		this.setSize(new Dimension(500, 500));
 		this.setLocation(200, 200);
+		this.setBackground(new Color(0.1f, 0.1f, 0.1f));
 		Thread thread = new Thread(() -> this.refresh());
 		rh = new RenderingHints(
 			RenderingHints.KEY_ANTIALIASING,
@@ -32,10 +33,6 @@ public class Renderer extends JPanel {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;	
 		g2.setRenderingHints(rh);
-		
-		for (City city : Main.cities) {
-			city.render(g2);
-		}
 		
 		Main.colony.render(g2);
 	}

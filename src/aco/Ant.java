@@ -7,11 +7,13 @@ public class Ant {
 	
 	private double x, y;
 	private int cityIndex;
+	private int[] tour;
 	private static final int DRAW_SIZE_DIAMETER = 8;
 	
-	public Ant(double x, double y) {
-		this.x = x;
-		this.y = y;
+	public Ant(int cityCount) {
+		this.tour = new int[cityCount];
+		this.x = 0;
+		this.y = 0;
 	}
 	
 	/**
@@ -22,10 +24,40 @@ public class Ant {
 	}
 	
 	/**
+	 * Sets the ant's x position for drawing.
+	 */
+	public void setX(double x) {
+		this.x = x;
+	}
+	
+	/**
 	 * Returns the Y position of this ant on the map, for use when drawing.
 	 */
 	public double getY() {
 		return this.y;	
+	}
+	
+	/**
+	 * Sets the ant's y position for drawing.
+	 */
+	public void setY(double y) {
+		this.y = y;
+	}
+	
+	/**
+	 * Returns the current tour of the ant.
+	 */
+	public int[] getTour() {
+		return this.tour;	
+	}
+	
+	/**
+	 * Sets this ant's tour.
+	 * 
+	 * @param tour the new tour.
+	 */
+	public void setTour(int[] tour) {
+		this.tour = tour;
 	}
 	
 	/**
@@ -35,7 +67,7 @@ public class Ant {
 	 * @param maxX The maximum X value of all cities, to scale the render window appropriately.
 	 * @param maxY The maximum Y value of all cities, to scale the render window appropriately.
 	 */
-	public void render(Graphics2D g2, int maxX, int maxY) {
+	public void render(Graphics2D g2, int minX, int minY, int maxX, int maxY) {
 		int drawX = (int) (this.getX()/(maxX/500));
 		int drawY = (int) (this.getY()/(maxY/500));
 		
