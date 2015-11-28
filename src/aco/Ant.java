@@ -28,6 +28,13 @@ public class Ant {
 		return this.y;	
 	}
 	
+	/**
+	 * Renders an ant as a dot on the specified graphics object.
+	 * 
+	 * @param g2 Graphics2D object to draw on.
+	 * @param maxX The maximum X value of all cities, to scale the render window appropriately.
+	 * @param maxY The maximum Y value of all cities, to scale the render window appropriately.
+	 */
 	public void render(Graphics2D g2, int maxX, int maxY) {
 		int drawX = (int) (this.getX()/(maxX/500));
 		int drawY = (int) (this.getY()/(maxY/500));

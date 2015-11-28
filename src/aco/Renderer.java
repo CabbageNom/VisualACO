@@ -25,7 +25,6 @@ public class Renderer extends JPanel {
 			RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON
 		);
-		
 	}
 	
 	@Override
