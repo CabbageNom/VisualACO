@@ -2,10 +2,13 @@ package aco;
 
 import java.util.ArrayList;
 import java.awt.Graphics2D;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class AntColony {
 	
 	private Ant[] ants;
+	private ExecutorService pool;
 	private City[] cities;
 	private int[][] pheremoneMatrix;
 	private int minX, minY, maxX, maxY;
@@ -35,6 +38,28 @@ public class AntColony {
 		for (int i = 0; i < antCount; i++) {
 			ants[i] = new Ant(cityCount);
 		}
+	}
+	
+	/**
+	 * Performs one iteration of the algorithm.
+	 */
+	public void iterate() {
+		findPaths();
+		applyPheremone();
+	}
+	
+	public void findPaths() {
+		pool = ExecutorService.newFixedThreadPool(antCount);
+		for (Ant ant : ants) {
+			ant = new Ant();
+			pool.execute(ant);
+		}
+		pool.shutdown();
+		pool.awaitTermination(1, TimeUnit.MINUTES);
+	}
+	
+	public void applyPheremone() {
+		// TODO: implement
 	}
 	
 	/**

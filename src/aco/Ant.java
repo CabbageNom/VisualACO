@@ -3,17 +3,22 @@ package aco;
 import java.awt.Graphics2D;
 import java.awt.Color;
 
-public class Ant {
+public class Ant implements Runnable {
 	
 	private double x, y;
 	private int cityIndex;
 	private int[] tour;
 	private static final int DRAW_SIZE_DIAMETER = 8;
 	
-	public Ant(int cityCount) {
+	public Ant(int cityCount, ) {
 		this.tour = new int[cityCount];
 		this.x = 0;
 		this.y = 0;
+	}
+	
+	@Override
+	public void run() {
+		// TODO: generate tour
 	}
 	
 	/**
