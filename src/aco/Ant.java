@@ -2,23 +2,83 @@ package aco;
 
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.util.Random;
 
 public class Ant implements Runnable {
 	
 	private double x, y;
 	private int cityIndex;
 	private int[] tour;
+	private City[] cities;
+	private int[][] pheremoneMatrix;
+	private Random random = new Random();
 	private static final int DRAW_SIZE_DIAMETER = 8;
 	
-	public Ant(int cityCount, ) {
-		this.tour = new int[cityCount];
+	public Ant(City[] cities, int[][] pheremoneMatrix) {
+		this.cities = cities;
+		this.pheremoneMatrix = pheremoneMatrix;
+		this.tour = new int[cities.length];
+		this.cityIndex = 0;
 		this.x = 0;
 		this.y = 0;
+		
+		System.out.println("ANT CREATED");
 	}
 	
 	@Override
 	public void run() {
-		// TODO: generate tour
+		generateTour();
+	}
+	
+	/**
+	 * Generates the tour for this ant according to the cities and pheremone matrix.
+	 */
+	public void generateTour() {
+		System.out.println("Generating tour");
+		tour[0] = 0;
+		for (int i = 1; i < cities.length; i++) {
+			int next = nextCity();
+			cityIndex = next;
+			tour[i] = next;
+		}
+	}
+	
+	/**
+	 * Calculates the next city in the tour.
+	 */
+	public int nextCity() {
+		int[] pheremone = pheremoneMatrix[cityIndex];
+		int sum = 0;
+		for (int i = 0; i < pheremone.length; i++) {
+			if (inTour(i))
+				continue;
+			sum += pheremone[i];
+		}
+		
+		int rand = random.nextInt(sum);
+		for (int i = 0; i < pheremone.length; i++) {
+			if (inTour(i))
+				continue;
+			rand -= pheremone[i];
+			if (rand <= 0) {
+				return i;
+			}
+		}
+		// Something went wrong if we got here
+		System.out.println("Something went wrong in Ant.nextCity()");
+		int i = 1;
+		while (inTour(i)) {
+			i++;
+		}
+		return i;
+	}
+	
+	private boolean inTour(int index) {
+		for (int i : tour) {
+			if (i == index)
+				return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -53,7 +113,7 @@ public class Ant implements Runnable {
 	 * Returns the current tour of the ant.
 	 */
 	public int[] getTour() {
-		return this.tour;	
+		return tour;	
 	}
 	
 	/**

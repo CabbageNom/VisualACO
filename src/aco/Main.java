@@ -41,7 +41,9 @@ public class Main {
 				(int) (fp.getMaxX()),
 				(int) (fp.getMaxY())
 			);
-		createFrame();
+		
+		colony.iterate();
+		//createFrame();
 	}
 	
 }

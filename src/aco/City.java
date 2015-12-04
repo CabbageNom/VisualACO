@@ -54,6 +54,7 @@ public class City {
 	 * @param maxY The maximum Y value of all cities, to scale the render window appropriately.
 	 */
 	public void render(Graphics2D g2, int minX, int minY, int maxX, int maxY) {
+		// Give 10% border to render panel
 		minX *= 0.90;
 		minY *= 0.90;
 		maxX *= 1.10;

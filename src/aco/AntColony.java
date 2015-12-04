@@ -3,6 +3,7 @@ package aco;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class AntColony {
@@ -12,18 +13,15 @@ public class AntColony {
 	private City[] cities;
 	private int[][] pheremoneMatrix;
 	private int minX, minY, maxX, maxY;
+	private static final int PHEREMONE_MIN = 1000, PHEREMONE_MAX = 10000;
 	
-	public AntColony(int antCount, int cityCount, int maxX, int maxY) {
+	/*public AntColony(int antCount, int cityCount, int maxX, int maxY) {
 		this.ants = new Ant[antCount];
 		this.cities = new City[cityCount];
 		this.maxX = maxX;
 		this.maxY = maxY;
 		this.pheremoneMatrix = new int[cityCount][cityCount];
-		
-		for (int i = 0; i < antCount; i++) {
-			ants[i] = new Ant(cityCount);
-		}
-	}
+	}*/
 	
 	public AntColony(int antCount, City[] cities, int minX, int minY, int maxX, int maxY) {
 		int cityCount = cities.length;
@@ -35,8 +33,10 @@ public class AntColony {
 		this.maxY = maxY;
 		this.pheremoneMatrix = new int[cityCount][cityCount];
 		
-		for (int i = 0; i < antCount; i++) {
-			ants[i] = new Ant(cityCount);
+		for (int[] pheremoneArray : pheremoneMatrix) {
+			for (int i = 0; i < pheremoneArray.length; i++) {
+				pheremoneArray[i] = PHEREMONE_MIN;
+			}
 		}
 	}
 	
@@ -44,18 +44,33 @@ public class AntColony {
 	 * Performs one iteration of the algorithm.
 	 */
 	public void iterate() {
-		findPaths();
+		generatePaths();
 		applyPheremone();
 	}
 	
-	public void findPaths() {
-		pool = ExecutorService.newFixedThreadPool(antCount);
-		for (Ant ant : ants) {
-			ant = new Ant();
-			pool.execute(ant);
+	public void generatePaths() {
+		pool = Executors.newFixedThreadPool(ants.length);
+		
+		for (int i = 0; i < ants.length; i++) {
+			ants[i] = new Ant(cities, pheremoneMatrix);
+			pool.execute(ants[i]);
 		}
 		pool.shutdown();
-		pool.awaitTermination(1, TimeUnit.MINUTES);
+		try {
+			pool.awaitTermination(1, TimeUnit.MINUTES);
+			System.out.println("123");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		for (Ant ant : ants) {
+			String tour = "" + ant;
+			tour += ": ";
+			for (int i : ant.getTour()) {
+				tour += i;
+				tour += "  ";
+			}
+			System.out.println(tour);
+		}
 	}
 	
 	public void applyPheremone() {
