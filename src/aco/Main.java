@@ -30,6 +30,15 @@ public class Main {
 		}};	
 	}
 	
+	public static void printTour(int[] tour) {
+		String str = "";
+		for (int i : tour) {
+			str += i;
+			str += "  ";
+		}
+		System.out.println(str);
+	}
+	
 	public static void main(String[] args) {
 		FileParser fp = new FileParser();
 		fp.readFile("wi29.tsp");
@@ -42,7 +51,20 @@ public class Main {
 				(int) (fp.getMaxY())
 			);
 		
-		colony.iterate();
+		int iterations = 10;
+		
+		for (int i = 0; i < iterations; i++) {
+			colony.iterate();
+			System.out.println("Tour " + i);
+			for (int j : colony.getShortestTour()) {
+				System.out.print(j);
+				System.out.print(",");
+			}
+			System.out.println("");
+			System.out.print("len: ");
+			System.out.println(colony.getShortestTourLength());
+			System.out.println("");
+		}
 		//createFrame();
 	}
 	
